@@ -1,477 +1,232 @@
-# Senior Database Expert: Stored Procedure Analysis & PDF Reporting Specialist (20+ Years Experience)
+# Senior Database Expert: Stored Procedure Statistics Analysis & PDF Reporting
 
-## Profile Overview
-A database expert with 20+ years specializing in **stored procedure comparison and statistical analysis** is a highly skilled **Performance DBA**, **Database Analyst**, or **Data Performance Consultant**. They focus on comparing procedure execution patterns, identifying bottlenecks, and generating detailed PDF reports for stakeholders.
+## Expert Profile
 
----
-
-## Core Expertise Areas
-
-### 1. **Stored Procedure Performance Profiling**
-- Captures execution statistics for stored procedures
-- Analyzes CPU time, I/O reads/writes, logical reads, physical reads
-- Compares execution patterns across different time periods or versions
-- Identifies memory consumption and resource usage per procedure
-- Example: Comparing a procedure's performance before and after refactoring
-
-### 2. **Statistical Comparison & Analysis**
-- Collects baseline metrics from two different procedures/versions
-- Calculates performance deltas (improvement/degradation %)
-- Analyzes execution plans side-by-side
-- Generates trend analysis and variance reports
-- Measures: Query duration, CPU cycles, I/O operations, lock contention
-
-### 3. **PDF Report Generation**
-- Creates professional, publication-ready PDF reports
-- Includes charts, graphs, and visual comparisons
-- Generates executive summaries and technical deep-dives
-- Exports data visualizations and metrics into formatted documents
-- Includes recommendations and optimization suggestions
+A database specialist with 20+ years in **Stored Procedure Statistics Comparison & Performance Reporting** is a niche but highly valuable role. They focus on analyzing procedure execution patterns, identifying performance degradation, and documenting findings in professional reports.
 
 ---
 
-## Daily & Weekly Responsibilities
+## Primary Responsibilities
 
-### Daily Tasks
-- **Data Collection**
-  - Run diagnostic queries to capture stored procedure statistics
-  - Execute `sp_who2`, `dm_exec_requests`, `dm_exec_query_stats` in SQL Server
-  - Collect metrics from Dynamic Management Views (DMVs)
-  - Log execution times and resource consumption
+### 1. **Stored Procedure Performance Monitoring**
+- Captures execution statistics before and after changes
+- Tracks metrics: execution time, CPU, logical reads, physical reads, row counts
+- Identifies procedures consuming excessive resources
+- Monitors query plan changes
 
-- **Performance Monitoring**
-  - Monitor active stored procedures in production
-  - Track query execution plans
-  - Identify slowdowns or anomalies
-  - Set up profiling for procedures flagged for comparison
+### 2. **Statistical Data Collection**
+- Captures baseline metrics from `sys.dm_exec_procedure_stats`
+- Records execution plans and query compilation data
+- Stores historical data for trend analysis
+- Compares performance across different time periods
 
-- **Ad-hoc Analysis**
-  - Developers ask: "Why is this stored procedure slow?"
-  - Compare new procedure version vs. legacy version
-  - Analyze wait statistics and bottlenecks
-  - Provide quick consultation on performance issues
+### 3. **Comparative Analysis**
+- Analyzes two datasets (before/after optimization, production/staging)
+- Calculates performance deltas and improvements
+- Identifies bottlenecks and anomalies
+- Documents regressions and improvements
 
-### Weekly Tasks
-- **Comprehensive Comparisons**
-  - Run A/B testing on competing procedure implementations
-  - Gather statistics over full production workload cycles
-  - Analyze stored procedures consuming most resources
-  - Identify procedures with performance regression
+### 4. **Report Generation**
+- Creates professional PDF reports with visualizations
+- Includes charts, graphs, and detailed tables
+- Provides executive summaries and technical deep-dives
+- Delivers actionable recommendations
 
-- **Report Generation**
-  - Compile comparison statistics into PDF reports
-  - Create visualizations and charts
-  - Document findings and recommendations
-  - Schedule automated report generation
-
-- **Presentation & Communication**
-  - Present findings to development teams
-  - Explain optimization opportunities
-  - Discuss tradeoffs (speed vs. resource consumption)
-  - Recommend procedure refactoring strategies
-
-### Monthly/Quarterly Tasks
-- **Baseline Establishment**
-  - Set new performance baselines for critical procedures
-  - Archive historical performance data
-  - Trend analysis across 6-12 months
-  - Capacity planning based on procedure growth
-
-- **Optimization Projects**
-  - Compare old vs. optimized procedure implementations
-  - Document before/after metrics in detailed reports
-  - Calculate ROI of optimization efforts
-  - Generate executive summary reports
+### 5. **Performance Recommendations**
+- Suggests index creation/modification
+- Recommends query rewrites
+- Proposes parameter optimization
+- Documents ROI of changes
 
 ---
 
-## Technical Skills & Competencies
+## Key Statistics They Analyze
 
-### Database Platforms
-| Platform | Expertise |
-|----------|-----------|
-| **SQL Server** | `sp_executesql`, Query Store, Extended Events, DMVs (dm_exec_requests, dm_exec_query_stats) |
-| **PostgreSQL** | `pg_stat_statements`, `EXPLAIN ANALYZE`, query profiling |
-| **Oracle** | `v$sql`, `v$session`, SQL Tuning Advisor, TKPROF |
-| **MySQL** | Performance Schema, slow query logs, query profiling |
-
-### Key Tools & Technologies
-
-**Stored Procedure Analysis Tools:**
-- SQL Server Management Studio (SSMS)
-- SQL Server Profiler & Extended Events
-- SolarWinds DPA (Diagnostic and Tuning Pack)
-- Redgate SQL Monitor
-- Dynatrace APM
-- DataGrip
-- IBM Optim
-
-**PDF Report Generation Tools:**
-- SSRS (SQL Server Reporting Services)
-- Power BI with custom reports
-- iTextSharp / IronPDF (C#/.NET)
-- Python libraries: ReportLab, FPDF2, Matplotlib
-- Crystal Reports
-- Advanced Excel with PDF export
-
-**Statistical Analysis Tools:**
-- Python (Pandas, NumPy, Matplotlib, Seaborn)
-- R (ggplot2, dplyr)
-- Tableau / Power BI for visualizations
-- SQL-based analytics
-
-### Programming & Scripting Languages
-- T-SQL (Advanced)
-- C# / .NET (for custom reporting tools)
-- Python (for automation and analysis)
-- PowerShell (for data collection automation)
-- Bash/Linux scripting
+| Metric | Significance |
+|--------|--------------|
+| **Execution Count** | How many times procedure was called |
+| **Total Elapsed Time** | Cumulative execution time |
+| **Total CPU Time** | CPU consumed |
+| **Logical Reads** | Data pages accessed from memory |
+| **Physical Reads** | Disk I/O operations |
+| **Last Execution Time** | Most recent run duration |
+| **Max Elapsed Time** | Worst-case execution time |
+| **Avg Elapsed Time** | Average per execution |
+| **Wait Time** | Time spent waiting for resources |
+| **Plan Handle** | Query execution plan identifier |
 
 ---
 
-## Typical Work Examples
+## Step-by-Step Process: Comparing Stored Procedure Statistics
 
-### **Example 1: E-Commerce Checkout Procedure Comparison**
+### **STEP 1: Capture Baseline Statistics (Time 1)**
 
-**Scenario**: Company has two versions of `usp_ProcessOrder` procedure
-- **Version A (Legacy)**: Current production, takes 2.5 seconds
-- **Version B (New)**: Optimized version, needs validation
+```sql
+-- Capture Statistics - Run this at first measurement point
+SELECT 
+    DB_NAME() AS DatabaseName,
+    OBJECT_NAME(sp.object_id) AS ProcedureName,
+    sp.object_id,
+    sp.create_date,
+    sp.modify_date,
+    ps.execution_count,
+    ps.total_elapsed_time / 1000000.0 AS total_elapsed_time_seconds,
+    ps.total_cpu_time / 1000000.0 AS total_cpu_time_seconds,
+    ps.total_logical_reads,
+    ps.total_physical_reads,
+    ps.total_worker_time / 1000000.0 AS total_worker_time_seconds,
+    ps.last_execution_time,
+    ps.min_elapsed_time / 1000.0 AS min_elapsed_time_ms,
+    ps.max_elapsed_time / 1000.0 AS max_elapsed_time_ms,
+    ps.last_elapsed_time / 1000.0 AS last_elapsed_time_ms,
+    CAST(ps.total_elapsed_time AS FLOAT) / NULLIF(ps.execution_count, 0) / 1000.0 AS avg_elapsed_time_ms,
+    CAST(ps.total_logical_reads AS FLOAT) / NULLIF(ps.execution_count, 0) AS avg_logical_reads
+INTO Statistics_Baseline_Snapshot1
+FROM sys.procedures sp
+INNER JOIN sys.dm_exec_procedure_stats ps 
+    ON sp.object_id = ps.object_id
+WHERE ps.database_id = DB_ID()
+ORDER BY ps.total_elapsed_time DESC;
 
-**What the Expert Does:**
-1. **Data Collection Phase** (1-2 weeks)
-   - Run both procedures under identical load
-   - Capture 1000+ executions of each
-   - Collect metrics:
-     - Average execution time
-     - Min/Max times
-     - CPU time (ms)
-     - Logical reads/writes
-     - Physical I/O operations
-     - Lock wait times
-
-2. **Statistical Analysis Phase**
-   - Calculate improvement: (2.5s - 0.8s) / 2.5s = **68% improvement**
-   - Standard deviation analysis
-   - Percentile analysis (p95, p99)
-   - Resource consumption comparison
-
-3. **PDF Report Generation**
-   - Executive Summary: "Version B is 68% faster"
-   - Performance Comparison Chart (bar graph)
-   - Execution Plan Analysis (text + visual)
-   - CPU/IO Comparison (line charts)
-   - Statistical table with metrics
-   - Recommendation: "Deploy Version B"
-
-**Output**: 15-20 page professional PDF with charts, tables, analysis
-
----
-
-### **Example 2: Stored Procedure Resource Comparison**
-
-**Scenario**: DBA needs to understand which procedures consume most resources
-
-**What the Expert Does:**
-
-1. **Collect Baseline Data**
-   ```
-   Procedure Name: usp_GenerateReport
-   - Avg Execution Time: 4.2 seconds
-   - Avg Logical Reads: 2,847,000
-   - Avg CPU Time: 3,100 ms
-   - Executions/Day: 1,200
-   - Total Daily Resource: 4.2 hours CPU
-   ```
-
-2. **Compare Against Optimized Version**
-   ```
-   Procedure Name: usp_GenerateReport_v2
-   - Avg Execution Time: 1.1 seconds (73% faster)
-   - Avg Logical Reads: 680,000 (76% reduction)
-   - Avg CPU Time: 780 ms (75% reduction)
-   - Executions/Day: 1,200
-   - Total Daily Resource: 1.1 hours CPU (savings: 3.1 hours/day)
-   ```
-
-3. **Generate PDF Report Including:**
-   - Side-by-side comparison table
-   - Execution plan difference analysis
-   - Index usage comparison
-   - Memory consumption graphs
-   - Cost-benefit analysis (hardware savings)
-   - Implementation roadmap
-
----
-
-### **Example 3: Performance Regression Analysis**
-
-**Scenario**: Procedure `usp_CustomerSearch` suddenly got slower after schema change
-
-**What the Expert Does:**
-
-1. **Historical Data Collection**
-   - Retrieves metrics from last 6 months
-   - Identifies exact date of performance drop
-   - Compares before/after execution plans
-
-2. **Root Cause Analysis**
-   - Execution plan changed due to statistics
-   - Missing index on foreign key
-   - Parameter sniffing issue
-   - Lock contention increase
-
-3. **Generates Detailed PDF Report**
-   - Performance timeline graph (showing degradation)
-   - Before/After execution plans
-   - Statistical proof of regression
-   - Root cause analysis section
-   - Recommended fixes
-   - Implementation cost estimate
-
----
-
-## Stored Procedure Metrics They Track
-
-### Performance Metrics
-| Metric | Description | Unit |
-|--------|-------------|------|
-| **Execution Time** | Total time procedure takes | Milliseconds (ms) |
-| **CPU Time** | Processor cycles used | ms |
-| **Elapsed Time** | Wall clock time | ms |
-| **Logical Reads** | Pages read from buffer pool | Count |
-| **Physical Reads** | Pages read from disk | Count |
-| **Writes** | Data modifications | Count |
-| **Row Count** | Rows affected | Count |
-
-### Advanced Metrics
-- **Plan Compilation Time**: How long to compile procedure
-- **Wait Statistics**: Lock waits, I/O waits, memory waits
-- **Worker Threads**: Parallel execution analysis
-- **Memory Grant**: Memory allocated vs. used
-- **Spills**: Temp DB usage (bad indicator)
-- **Degree of Parallelism (DOP)**: How many CPUs used
-
----
-
-## PDF Report Structure (Typical 20-30 Pages)
-
-```
-1. Executive Summary (1-2 pages)
-   - Overview of comparison
-   - Key findings
-   - Recommendations
-
-2. Performance Overview (2-3 pages)
-   - Performance metrics table
-   - Comparison charts (bar, pie, line)
-   - Improvement percentages
-
-3. Execution Plan Analysis (4-5 pages)
-   - Plan XML comparison
-   - Visual plan diagrams
-   - Estimated vs. Actual rows
-
-4. Statistical Deep Dive (3-4 pages)
-   - Detailed metrics breakdown
-   - Standard deviation analysis
-   - Percentile analysis (p50, p95, p99)
-   - Trend graphs
-
-5. Resource Consumption (2-3 pages)
-   - CPU usage comparison
-   - I/O operations chart
-   - Memory consumption
-   - Lock contention analysis
-
-6. Index & Query Analysis (3-4 pages)
-   - Index usage comparison
-   - Missing index recommendations
-   - Join strategies analyzed
-   - Predicate effectiveness
-
-7. Findings & Observations (2-3 pages)
-   - Key bottlenecks identified
-   - Root cause analysis
-   - Performance characteristics explained
-
-8. Recommendations (2-3 pages)
-   - Optimization suggestions
-   - Implementation steps
-   - Risk assessment
-   - Expected outcomes
-
-9. Appendix (Variable)
-   - Detailed metrics tables
-   - Query scripts used
-   - Execution plan XML
-   - Query statistics dump
+-- Export this data to CSV for comparison
 ```
 
 ---
 
-## Tools for PDF Generation
+### **STEP 2: Implement Changes (Optimization)**
 
-### SQL Server Native
-```
-SQL Server Reporting Services (SSRS)
-- Built-in to SQL Server
-- Creates pixel-perfect reports
-- Exports to PDF directly
-- Supports charts, tables, gauges
-```
+```sql
+-- Example: Optimize a stored procedure
+-- Original procedure (slow)
+ALTER PROCEDURE usp_GetCustomerOrders
+    @CustomerID INT
+AS
+BEGIN
+    SELECT o.OrderID, o.OrderDate, o.TotalAmount
+    FROM Orders o
+    INNER JOIN Customers c ON o.CustomerID = c.CustomerID
+    WHERE c.CustomerID = @CustomerID
+    ORDER BY o.OrderDate DESC
+END
 
-### .NET/C# Approach
-```csharp
-// Using iTextSharp
-Document doc = new Document();
-PdfWriter.GetInstance(doc, new FileStream("report.pdf", FileMode.Create));
-doc.Open();
-doc.Add(new Paragraph("Stored Procedure Comparison Report"));
-doc.Add(table); // Add performance table
-doc.Add(image); // Add charts/graphs
-doc.Close();
-```
-
-### Python Approach
-```python
-# Using ReportLab + Matplotlib
-from reportlab.lib.pagesizes import letter
-from matplotlib import pyplot as plt
-
-# Generate charts
-plt.plot(execution_times)
-plt.savefig('performance_chart.png')
-
-# Create PDF report
-pdf = SimpleDocTemplate("report.pdf", pagesize=letter)
-elements = [title, table, Image("performance_chart.png")]
-pdf.build(elements)
-```
-
-### Enterprise Solutions
-- **SSRS** (SQL Server Reporting Services)
-- **Power BI** with export to PDF
-- **Tableau** with scheduling
-- **Crystal Reports**
-- **Aspose.Words / Aspose.PDF**
-
----
-
-## Real-World Workflow
-
-### Week 1: Data Collection & Setup
-```
-Monday:    Set up monitoring for both procedures
-Tuesday:   Run 1000 executions each under test load
-Wednesday: Collect baseline metrics, verify data quality
-Thursday:  Run extended production profiling
-Friday:    Consolidate collected data into database
-```
-
-### Week 2: Analysis & Reporting
-```
-Monday:    Statistical analysis and trend identification
-Tuesday:   Create visualizations and charts
-Wednesday: Write findings and recommendations
-Thursday:  Generate PDF report using SSRS/Python
-Friday:    Present findings to stakeholders
+-- Optimized version (with index hints, better filtering)
+ALTER PROCEDURE usp_GetCustomerOrders
+    @CustomerID INT
+AS
+BEGIN
+    SELECT o.OrderID, o.OrderDate, o.TotalAmount
+    FROM Orders o WITH (INDEX(idx_Orders_CustomerID))
+    WHERE o.CustomerID = @CustomerID
+    ORDER BY o.OrderDate DESC
+END
 ```
 
 ---
 
-## Typical Business Value Delivered
+### **STEP 3: Capture Post-Change Statistics (Time 2)**
 
-### Cost Savings
-- ✅ 50-80% reduction in database resource usage
-- ✅ Deferred hardware upgrades by months/years
-- ✅ Reduced cloud compute costs (AWS RDS, Azure SQL)
-- ✅ Lower electricity and cooling costs
+```sql
+-- Wait period (e.g., 24 hours, 1 week) for realistic data
+-- Then capture second snapshot
 
-### Performance Improvements
-- ✅ 5-10x faster procedure execution
-- ✅ Reduced response times for user-facing features
-- ✅ Better system scalability
-- ✅ Improved user experience
-
-### Risk Mitigation
-- ✅ Data-driven decisions on procedure updates
-- ✅ Documented performance baselines
-- ✅ Reduced rollback risks through thorough testing
-- ✅ Audit trail for compliance
-
-### Example ROI
-```
-Project: Optimize order processing procedures
-Effort: 6 weeks analysis
-Result: 70% faster execution
-Impact: 
-  - Servers reduced from 8 to 5
-  - Annual hardware savings: $200,000
-  - User satisfaction: +35%
-  - Time to deploy reports: 70% faster
-ROI: 300% in first year
+SELECT 
+    DB_NAME() AS DatabaseName,
+    OBJECT_NAME(sp.object_id) AS ProcedureName,
+    sp.object_id,
+    ps.execution_count,
+    ps.total_elapsed_time / 1000000.0 AS total_elapsed_time_seconds,
+    ps.total_cpu_time / 1000000.0 AS total_cpu_time_seconds,
+    ps.total_logical_reads,
+    ps.total_physical_reads,
+    ps.last_execution_time,
+    ps.min_elapsed_time / 1000.0 AS min_elapsed_time_ms,
+    ps.max_elapsed_time / 1000.0 AS max_elapsed_time_ms,
+    ps.last_elapsed_time / 1000.0 AS last_elapsed_time_ms,
+    CAST(ps.total_elapsed_time AS FLOAT) / NULLIF(ps.execution_count, 0) / 1000.0 AS avg_elapsed_time_ms
+INTO Statistics_Baseline_Snapshot2
+FROM sys.procedures sp
+INNER JOIN sys.dm_exec_procedure_stats ps 
+    ON sp.object_id = ps.object_id
+WHERE ps.database_id = DB_ID()
+ORDER BY ps.total_elapsed_time DESC;
 ```
 
 ---
 
-## Compensation & Career Path
+### **STEP 4: Compare the Two Snapshots**
 
-### Typical Salaries (2026)
-| Role | Salary Range |
-|------|--------------|
-| **Senior DBA** | $120K - $160K/year |
-| **Database Performance Specialist** | $140K - $190K/year |
-| **Database Performance Architect** | $160K - $240K/year |
-| **Independent Consultant (20+ years)** | $250-500/hour |
-
-### Career Progression
+```sql
+-- Compare Snapshot 1 vs Snapshot 2
+SELECT 
+    COALESCE(s1.ProcedureName, s2.ProcedureName) AS ProcedureName,
+    s1.execution_count AS Executions_Before,
+    s2.execution_count AS Executions_After,
+    s2.execution_count - s1.execution_count AS Execution_Count_Change,
+    
+    ROUND(s1.avg_elapsed_time_ms, 2) AS Avg_Time_Before_ms,
+    ROUND(s2.avg_elapsed_time_ms, 2) AS Avg_Time_After_ms,
+    ROUND(s1.avg_elapsed_time_ms - s2.avg_elapsed_time_ms, 2) AS Avg_Time_Improvement_ms,
+    
+    CASE 
+        WHEN s1.avg_elapsed_time_ms > 0 
+        THEN ROUND(((s1.avg_elapsed_time_ms - s2.avg_elapsed_time_ms) / s1.avg_elapsed_time_ms * 100), 2)
+        ELSE 0 
+    END AS Performance_Improvement_Percent,
+    
+    s1.total_logical_reads AS Logical_Reads_Before,
+    s2.total_logical_reads AS Logical_Reads_After,
+    s2.total_logical_reads - s1.total_logical_reads AS Logical_Reads_Change,
+    
+    ROUND(CAST(s1.total_logical_reads AS FLOAT) / NULLIF(s1.execution_count, 0), 0) AS Avg_Logical_Reads_Before,
+    ROUND(CAST(s2.total_logical_reads AS FLOAT) / NULLIF(s2.execution_count, 0), 0) AS Avg_Logical_Reads_After,
+    
+    s1.total_cpu_time_seconds AS CPU_Time_Before_Sec,
+    s2.total_cpu_time_seconds AS CPU_Time_After_Sec,
+    ROUND(s1.total_cpu_time_seconds - s2.total_cpu_time_seconds, 2) AS CPU_Time_Improvement_Sec,
+    
+    CASE 
+        WHEN s2.avg_elapsed_time_ms < s1.avg_elapsed_time_ms THEN 'IMPROVED'
+        WHEN s2.avg_elapsed_time_ms > s1.avg_elapsed_time_ms THEN 'DEGRADED'
+        ELSE 'NO CHANGE'
+    END AS Status
+FROM Statistics_Baseline_Snapshot1 s1
+FULL OUTER JOIN Statistics_Baseline_Snapshot2 s2
+    ON s1.ProcedureName = s2.ProcedureName
+ORDER BY ABS(COALESCE(s1.avg_elapsed_time_ms, 0) - COALESCE(s2.avg_elapsed_time_ms, 0)) DESC;
 ```
-Junior DBA (0-3 years)
-    ↓
-DBA / Database Developer (3-7 years)
-    ↓
-Senior DBA / Performance Engineer (7-15 years)
-    ↓
-Performance Architect / Lead DBA (15-20 years)
-    ↓
-Database Director / Chief DBA (20+ years)
+
+---
+
+### **STEP 5: Export Comparison Data**
+
+```sql
+-- Export to staging table for PDF generation
+SELECT 
+    COALESCE(s1.ProcedureName, s2.ProcedureName) AS ProcedureName,
+    s1.execution_count AS Executions_Before,
+    s2.execution_count AS Executions_After,
+    ROUND(s1.avg_elapsed_time_ms, 2) AS AvgTime_Before_ms,
+    ROUND(s2.avg_elapsed_time_ms, 2) AS AvgTime_After_ms,
+    CASE 
+        WHEN s1.avg_elapsed_time_ms > 0 
+        THEN ROUND(((s1.avg_elapsed_time_ms - s2.avg_elapsed_time_ms) / s1.avg_elapsed_time_ms * 100), 2)
+        ELSE 0 
+    END AS Improvement_Percent,
+    ROUND(s1.total_cpu_time_seconds, 2) AS CPU_Time_Before_Sec,
+    ROUND(s2.total_cpu_time_seconds, 2) AS CPU_Time_After_Sec,
+    s1.max_elapsed_time_ms AS MaxTime_Before_ms,
+    s2.max_elapsed_time_ms AS MaxTime_After_ms,
+    s1.total_logical_reads AS LogicalReads_Before,
+    s2.total_logical_reads AS LogicalReads_After
+INTO StoredProc_Comparison_Report
+FROM Statistics_Baseline_Snapshot1 s1
+FULL OUTER JOIN Statistics_Baseline_Snapshot2 s2
+    ON s1.ProcedureName = s2.ProcedureName
+WHERE COALESCE(s1.ProcedureName, s2.ProcedureName) IS NOT NULL;
 ```
 
 ---
 
-## Key Skills Summary
+## Step 6-10: Generate PDF Report (Python Implementation)
 
-| Skill Area | Proficiency |
-|-----------|-------------|
-| T-SQL/Advanced SQL | Expert |
-| Stored Procedure Design | Expert |
-| Execution Plan Analysis | Expert |
-| Statistical Analysis | Advanced |
-| PDF Report Tools (SSRS/Python) | Advanced |
-| Database Monitoring Tools | Advanced |
-| Data Visualization | Advanced |
-| Query Optimization | Expert |
-| Performance Tuning | Expert |
-| Communication & Presentation | Advanced |
-
----
-
-## Certifications Often Held
-- Microsoft Certified: Azure Database Administrator Associate
-- Oracle Database Administrator Certified Professional
-- Certified Database Professional (various vendors)
-- Advanced SQL Server performance courses
-- Statistical analysis certifications
-
----
-
-## Would You Like Me to Elaborate On?
-
-1. **Practical Examples**: Specific stored procedure comparisons with SQL code
-2. **PDF Report Templates**: Ready-to-use SSRS or Python templates
-3. **Tools Comparison**: Deep dive into SSRS vs. Power BI vs. Python for reporting
-4. **Interview Preparation**: Questions for this specialized role
-5. **Building This Skillset**: Learning path to develop this expertise
-6. **Automation Scripts**: How to automate data collection and reporting
-
-Let me know which area interests you most!
+Let me create a comprehensive Python solution for PDF generation:
